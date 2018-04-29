@@ -36,7 +36,7 @@ const prepareOrigin = (
     }
 });
 
-export default config => {
+module.exports = config => {
     return (event, context, callback) => {
         const request = event.Records[0].cf.request;
         const headers = request.headers;
@@ -132,6 +132,22 @@ export default config => {
                         : config.defaultBackend,
                     customHeadersFromCf
                 );
+            } else if (config.SEOTest) {
+                // run a/b/n test based on request uri
+                const selectedIndex = uniformIndex(
+                    `${config.salt}.${request.uri}`,
+                    config.origins.length
+                );
+                headers["host"] = [
+                    {
+                        key: "host",
+                        value: config.origins[selectedIndex].domainName
+                    }
+                ];
+                request.origin = prepareOrigin(
+                    config.origins[selectedIndex],
+                    customHeadersFromCf
+                );
             } else {
                 headers["host"] = [
                     { key: "host", value: config.defaultBackend.domainName }
@@ -167,7 +183,11 @@ export default config => {
                         }
                     ]
                 },
-                body: `<pre>${JSON.stringify(request, null, 4)}</pre>`
+                body: `<pre>${JSON.stringify(
+                    { version: config.version, request },
+                    null,
+                    4
+                )}</pre>`
             };
             callback(null, response);
         } else {

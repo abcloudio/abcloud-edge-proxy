@@ -1,6 +1,6 @@
 ### A/B Cloud - AWS Cloudfront edge proxy
 
-A Lambda@Edge function used to enable a/b testing, canary releasing, and gatekeeping.
+A Lambda@Edge function used to enable a/b testing, canary releasing, and gatekeeping. Enable SSL, for any domain, with AWS certificate manager and Cloudfront. Once set up, `abcloud-edge-proxy` enables you to a/b test, canary release, and point your domain to any backend, across any cloud provider.
 
 ### Usage
 
@@ -121,6 +121,40 @@ const devtoken = jwttoken.sign(
 );
 
 console.log(devtoken);
+```
+
+#### Search Engine Optimization - A/B Testing Example
+
+Implement by setting `SEOTest` to `true` in the config.
+
+Search engine optimization a/b testing is a technique used to validate changes that may impact search rankings. With a/b/n testing, as implemented in this proxy, a unique `visitor id` is used to hash to a backend. With SEO based a/b/n testing, the full `path` of each individual request is hashed and used to select the backend. After completion of the experiment period, traffic volumes between the two, or more, SEO implementation are compared for statistical significance.
+
+When running an a/b test, on natural search traffic, it would be wise to validate that your website has enough ranked pages such that a random split of urls results in a generally equal split of natural search traffic (pre-test).
+
+Example config.
+
+```js
+import edgeProxy from "abcloud-edge-proxy";
+
+const config = {
+    defaultBackend: {
+        domainName: "blue.my-site.com"
+    },
+    origins: [
+        {
+            domainName: "blue.my-site.com"
+        },
+        {
+            domainName: "green.my-site.com"
+        }
+    ],
+    salt: "unique-assignment-salt",
+
+    // Note the SEOTest flag is set to true
+    SEOTest: true
+};
+
+exports.handler = edgeProxy(config);
 ```
 
 #### Echoer
