@@ -1,8 +1,8 @@
 {
     "name": "abcloud-edge-proxy",
-    "version": "1.0.0-alpha.05",
+    "version": "1.0.0-alpha.06",
     "description":
-        "Cloudfront proxy, providing a/b/n testing, canary releasing, and gatekeeping. Implemented as an edge lambda function.",
+        "Cloudfront proxy, providing a/b/n testing, canary releasing, gatekeeping, and SEO a/b/n testing. Implemented as an edge lambda function.",
     "main": "./dist/index.js",
     "scripts": {
         "test": "jest --verbose --watch",
@@ -17,6 +17,7 @@
         "serverless",
         "proxy",
         "a/b testing",
+        "seo a/b testing",
         "gatekeeping",
         "canary release",
         "traffic shaping",

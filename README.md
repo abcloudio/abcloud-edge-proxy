@@ -1,6 +1,6 @@
 ### A/B Cloud - AWS Cloudfront edge proxy
 
-A Lambda@Edge function used to enable a/b testing, canary releasing, and gatekeeping. Enable SSL, for any domain, with AWS certificate manager and Cloudfront. Once set up, `abcloud-edge-proxy` enables you to a/b test, canary release, and point your domain to any backend, across any cloud provider.
+A Lambda@Edge function used to enable a/b testing, canary releasing, gatekeeping, and SEO a/b/n testing. Enable SSL, for any domain, with AWS certificate manager and Cloudfront. Once set up, `abcloud-edge-proxy` enables you to a/b test, canary release, and point your domain to any backend, across any cloud provider. Analytics and experimental design (power calculation, statistical analysis) are not part of this package.
 
 ### Usage
 
